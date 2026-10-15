@@ -24,7 +24,6 @@
   --color-warning: var(--warning);
   --shadow-soft: 0 4px 20px -6px oklch(0.4 0.1 280 / 0.12);
   --shadow-lift: 0 18px 40px -12px oklch(0.45 0.2 280 / 0.3);
-  --background-image-gradient-hero: linear-gradient(135deg, oklch(0.5 0.24 275), oklch(0.55 0.25 300) 60%, oklch(0.62 0.22 330));
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -152,3 +151,6 @@
 }
 
 html { scroll-behavior: smooth; }
+@utility bg-gradient-hero {
+  background-image: linear-gradient(135deg, oklch(0.5 0.24 275), oklch(0.55 0.25 300) 60%, oklch(0.62 0.22 330));
+}
