@@ -1,24 +1,44 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { Toaster } from "@/components/ui/sonner";
+import { StoreProvider } from "@/lib/store";
+import { Navbar } from "@/components/shop/Navbar";
+import { Hero } from "@/components/shop/Hero";
+import { ProductGrid } from "@/components/shop/ProductGrid";
+import { CartDrawer } from "@/components/shop/CartDrawer";
+import { InventoryPanel } from "@/components/shop/InventoryPanel";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "ShopEase — Shop Smart. Live Better." },
+      { name: "description", content: "ShopEase storefront with electronics, fashion, accessories and home goods, plus live inventory management." },
+      { property: "og:title", content: "ShopEase — Shop Smart. Live Better." },
+      { property: "og:description", content: "Shop electronics, fashion and home essentials with live inventory management." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
+  const [cartOpen, setCartOpen] = useState(false);
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <StoreProvider>
+      <Navbar onCart={() => setCartOpen(true)} />
+      <main>
+        <section id="shop" className="scroll-mt-16">
+          <Hero />
+          <ProductGrid />
+        </section>
+        <InventoryPanel />
+      </main>
+      <footer className="border-t py-8 text-center text-sm text-muted-foreground">
+        © {new Date().getFullYear()} ShopEase. All rights reserved.
+      </footer>
+      <CartDrawer open={cartOpen} onOpenChange={setCartOpen} />
+      <Toaster position="top-center" richColors />
+    </StoreProvider>
   );
 }
